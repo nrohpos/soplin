@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soplin Memories</title>
+    <title>Soplin ការចងចាំអាពាហ៍ពិពាហ៍</title>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -14,6 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/x-icon" href="/assests/logo/logo.png" />
   </head>
 
   <body>
@@ -30,15 +31,17 @@
             “ពីមនុស្សពីរនាក់ ក្លាយជាជីវិត្តមនុស្សតែម្នាក់ ក្រោមវាសនា
             និងសេចក្ដីស្រឡាញ់កើតចេញពីចិត្ត តែមួយ”
           </h1>
-          <h2>~ អៀង ទិត្យសោភ័ណ្ឌ <span>&</span> វុន ដាលីន ~</h2>
+          <h2 class="nameText">
+            ~ អៀង ទិត្យសោភ័ណ្ឌ <span>នឹង</span> វុន ដាលីន ~
+          </h2>
         </div>
         <div class="countdown">
-          <div><span id="days">00</span><small>DAYS</small></div>
-          <div><span id="hours">00</span><small>HOURS</small></div>
-          <div><span id="minutes">00</span><small>MINUTES</small></div>
-          <div><span id="seconds">00</span><small>SECONDS</small></div>
+          <div><span id="days">00</span><small>ថ្ងៃ</small></div>
+          <div><span id="hours">00</span><small>ម៉ោង</small></div>
+          <div><span id="minutes">00</span><small>នាទី</small></div>
+          <div><span id="seconds">00</span><small>វិនាទី</small></div>
         </div>
-        <p class="wedding-date" id="weddingMessage">26 June 2026</p>
+        <p class="wedding-date" id="weddingMessage">២៦ មិថុនា ២០២៦</p>
         <audio id="bgMusic" src="/assests/songs/photograph.mp3" loop></audio>
       </div>
     </div>
@@ -70,10 +73,10 @@
     <!-- ===== CATEGORY ===== -->
     <div class="category">
       <div class="cat-box" style="background-image: url('prewedding.jpg')">
-        <span>PRE-WEDDING</span>
+        <span>រូបមុនរៀបអាពាហ៍ពិពាហ៍</span>
       </div>
       <div class="cat-box" style="background-image: url('wedding.jpg')">
-        <span>WEDDING</span>
+        <span>អាពាហ៍ពិពាហ៍</span>
       </div>
     </div>
 
@@ -101,7 +104,7 @@
     <!-- ===== GALLERY ===== -->
     <section>
       <h2 style="text-align: center; margin-bottom: 40px">
-        Memories Collection
+        រូបអនុស្សាវរីយ៍ នៃយើងទាំងទ្វេរ
       </h2>
       <div class="gallery-wrapper">
         <div class="gallery" id="gallery"></div>
@@ -114,14 +117,14 @@
     </div>
     <!-- Floating Button -->
     <a href="#" id="congratsBtn" class="btn-congrats floating"
-      >Send us wishes....</a
+      >ផ្ញើរពាក្យប្រសិទ្ធពរជ៍យរបស់អ្នក ....</a
     >
 
     <!-- Popup -->
     <div class="wish-modal" id="wishModal" aria-hidden="true">
       <div class="wish-card">
         <div class="wish-head">
-          <div class="wish-title">Send your wishes 💖</div>
+          <div class="wish-title">ពាក្យប្រសិទ្ធពរជ៍យ ជូនគូរសាមីភារយាថ្មី💖</div>
           <button class="wish-close" id="wishClose" type="button">✕</button>
         </div>
 
@@ -134,12 +137,26 @@
         ></textarea>
 
         <div class="wish-actions">
-          <button id="wishSend" class="wish-send" type="button">Send</button>
+          <button id="wishRandom" class="wish-random" type="button">
+            🎲 ផ្លាស់ ប្តូរពាក្យ
+          </button>
+          <button id="wishSend" class="wish-send" type="button">ផ្ញើរ</button>
         </div>
       </div>
     </div>
     <!-- ===== FOOTER ===== -->
-    <footer>© 2026 Wedding & Pre-Wedding Memories · Crafted with Love</footer>
+    <footer>
+      © ២០២៦ ការចងចាំអាពាហ៍ពិពាហ៍ នឹង ភាពចែករំលែក
+      <br />
+      <a
+        href="https://t.me/msg_to_soplin"
+        target="_blank"
+        rel="noopener"
+        class="footer-link"
+      >
+        មើលពាក្យជូនពរ…
+      </a>
+    </footer>
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -22,9 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   observeReveals();
+  
 
   // expose for dynamically added images
   window.observeReveals = observeReveals;
+
+  const lines = document.querySelectorAll(".love-poem p");
+  await loadWishes();
+  await loadGallery();
+  lines.forEach((line) => observer.observe(line));
 });
 /* ===== QOUTE ANIMATE ===== */
 const el = document.getElementById("animatedText");
@@ -73,6 +79,17 @@ document.querySelectorAll(".gallery img").forEach((img) => {
   };
 });
 
+// khmer Number
+function toKhmerNumber(value) {
+  const kh = ["០", "១", "២", "៣", "៤", "៥", "៦", "៧", "៨", "៩"];
+  return String(value).replace(/\d/g, (d) => kh[d]);
+}
+
+function fmt(val, pad2 = true) {
+  const s = pad2 ? String(val).padStart(2, "0") : String(val);
+  return toKhmerNumber(s);
+}
+
 modal.onclick = () => modal.classList.remove("active");
 
 /* ===== COUNTDOWN TIMER ===== */
@@ -92,7 +109,7 @@ function updateCountdown() {
 
   if (distance <= 0) {
     document.querySelector(".countdown").style.display = "none";
-    messageEl.textContent = "❤️ We’re getting married! ❤️";
+    messageEl.textContent = "❤️ យើងកំពុងរៀបអាពាហ៍ពិពាហ៍! 💍";
     messageEl.style.fontSize = "1.2rem";
     if (musicEl) musicEl.play().catch(() => {});
     clearInterval(timer);
@@ -106,22 +123,22 @@ function updateCountdown() {
   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  daysEl.textContent = days;
-  hoursEl.textContent = String(hours).padStart(2, "0");
-  minutesEl.textContent = String(minutes).padStart(2, "0");
-  secondsEl.textContent = String(seconds).padStart(2, "0");
+  daysEl.textContent = fmt(days, false); // days usually not padded
+  hoursEl.textContent = fmt(hours);
+  minutesEl.textContent = fmt(minutes);
+  secondsEl.textContent = fmt(seconds);
 
-  // Animate only when value changes
   const pairs = [
-    [daysEl, days],
-    [hoursEl, hours],
-    [minutesEl, minutes],
-    [secondsEl, seconds],
+    [daysEl, days, false],
+    [hoursEl, hours, true],
+    [minutesEl, minutes, true],
+    [secondsEl, seconds, true],
   ];
 
-  pairs.forEach(([el, val]) => {
-    if (el.textContent !== String(val).padStart(2, "0")) {
-      el.textContent = String(val).padStart(2, "0");
+  pairs.forEach(([el, val, pad2]) => {
+    const newText = fmt(val, pad2);
+    if (el.textContent !== newText) {
+      el.textContent = newText;
       el.style.animation = "none";
       el.offsetHeight; // reflow
       el.style.animation = "fadeIn 0.5s ease forwards";
@@ -160,16 +177,13 @@ async function loadGallery() {
     gallery.appendChild(group);
   }
 }
-loadGallery();
 
 // setDefault Message
+let defaultMessage = `💐 Congratulations To Eang Tithsophorn & Vun Dalin 💍`;
+let dataWishList = [];
 
 // Close modal
 modal.addEventListener("click", () => modal.classList.remove("active"));
-
-const TELEGRAM_BOT_TOKEN = "8463447682:AAFOE_gow0ihmh7tG31cGCdQXq_BidlSj44";
-const CHAT_ID = "-1003268717262";
-const MESSAGE_THREAD_ID = ""; // optional
 
 // ===== Elements =====
 const congratsBtn = document.getElementById("congratsBtn");
@@ -178,7 +192,41 @@ const wishClose = document.getElementById("wishClose");
 const wishText = document.getElementById("wishText");
 const wishSend = document.getElementById("wishSend");
 
-const DEFAULT_MESSAGE = `💐 Congratulations To Eang Tithsophorn & Vun Dalin 💍`;
+const wishRandom = document.getElementById("wishRandom");
+
+// Get one random message
+function getRandomMessage() {
+  return dataWishList[Math.floor(Math.random() * dataWishList.length)];
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Load wish
+async function loadWishes() {
+  const res = await fetch("/assests/manifest.json");
+  const data = await res.json();
+  const khmerWishes = data.words || [];
+  const englishWishes = data.wordsEnglish || [];
+  dataWishList = khmerWishes.concat(englishWishes)
+  shuffleArray(dataWishList);
+  defaultMessage = getRandomMessage();
+}
+
+// On click → insert random message
+wishRandom.addEventListener("click", () => {
+  wishText.value = getRandomMessage();
+  // enable send button if you use disable logic
+  if (typeof toggleSendButton === "function") {
+    toggleSendButton();
+  }
+
+  wishText.focus();
+});
 
 // Open modal
 congratsBtn.addEventListener("click", (e) => {
@@ -186,7 +234,12 @@ congratsBtn.addEventListener("click", (e) => {
   wishModal.classList.add("active");
   wishModal.setAttribute("aria-hidden", "false");
 
-  wishText.value = DEFAULT_MESSAGE;
+  if (dataWishList.length > 0) {
+    wishText.value = getRandomMessage();
+  } else {
+    wishText.value = defaultMessage;
+  }
+  toggleSendButton?.();
   setTimeout(() => {
     wishText.focus();
     wishText.setSelectionRange(wishText.value.length, wishText.value.length);
@@ -229,44 +282,28 @@ wishSend.addEventListener("click", () => {
   }
 
   wishSend.disabled = true;
-  wishSend.textContent = "Sending...";
+  wishSend.textContent = "កំពុងផ្ញើរ...";
 
+  const telegramBotToken = "8463447682:AAFOE_gow0ihmh7tG31cGCdQXq_BidlSj44";
+  const groupID = "-1003268717262";
+  const messageThreadId = ""; // optional
   // Fire-and-forget (no response needed)
-  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+  fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      chat_id: CHAT_ID,
-      message_thread_id: MESSAGE_THREAD_ID || undefined,
+      chat_id: groupID,
+      message_thread_id: messageThreadId || undefined,
       text: text,
     }),
   }).finally(() => {
     wishSend.disabled = false;
-    wishSend.textContent = "Send";
+    wishSend.textContent = "ផ្ញើរ";
     closeWishModal();
 
     // nice feedback
-    congratsBtn.textContent = "💖 Thanks!";
+    congratsBtn.textContent = "💖 អរគុណច្រើន!";
     congratsBtn.style.pointerEvents = "none";
     congratsBtn.style.opacity = "0.75";
   });
 });
-
- document.addEventListener("DOMContentLoaded", () => {
-    const lines = document.querySelectorAll(".love-poem p");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-          } else {
-            entry.target.classList.remove("show"); // animate again on scroll back
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-
-    lines.forEach((line) => observer.observe(line));
-  });
