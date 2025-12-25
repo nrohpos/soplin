@@ -205,5 +205,52 @@
     "💍❤️  Congratulations on a love meant to last.  🌸",
 
     "😊💖  Wishing you a lifetime of happiness together.  ✨"
+  ],
+  "agenda": [
+    {
+      "type": "stop",
+      "time": "៧:០០ នាទី ព្រឹក",
+      "desc": "ពិធីហែរជំនូន / Traditional Khmer Dowry Procession"
+    },
+    {
+      "type": "stop",
+      "time": "៨:៣០ នាទី ព្រឹក",
+      "desc": "កិច្ចអាពាហ៍ពិពាហ៍ / Wedding Ceremony"
+    },
+    {
+      "type": "stop",
+      "time": "១០:៣០ នាទី ព្រឹក",
+      "desc": "ពិធីចងដៃក / Blessing Ceremony"
+    },
+    {
+      "type": "stop",
+      "time": "១១:៣០ នាទី ព្រឹក",
+      "desc": "កិច្ចស្រស់ស្រូបអាហារថ្ងៃត្រង់ / Lunch reception"
+    },
+    {
+      "type": "location",
+      "time": "៦:០០ នាទី ល្ងាច",
+      "place": "សាល ចំការដូង / SALLE CHAMKAR DOUNG",
+      "addr": "Chamkar Doung Street (217), Phnom Penh 120501",
+      "note": "(Infront of Chamkar Doung's Primary School)"
+    },
+    {
+      "type": "stop",
+      "compact": true,
+      "time": "៦:៣០ នាទី យប់",
+      "desc": "កិច្ចអាហារពេលល្ងាច / Wedding Dinner"
+    },
+    {
+      "type": "stop",
+      "compact": true,
+      "time": "៨:៣០ នាទី យប់",
+      "desc": "កិច្ចកាត់នំខេក / Cake Cutting Ceremony"
+    },
+    {
+      "type": "stop",
+      "compact": true,
+      "time": "១១:០០ នាទី យប់",
+      "desc": "ចប់ពិធីមង្គលការ /  Wedding Celebrations Come to an End"
+    }
   ]
 }

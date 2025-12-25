@@ -1,9 +1,30 @@
-
 :root {
-  --bg: #f3ede4;
+  --bg: #f4f6fa;
   --dark: #1f1f1f;
-  --accent: #b89b6a;
-  --muted: #777;
+  --accent: #807245;
+  --muted: #c9cfde;
+  --surface: #ffffff;
+  --primary: #313e69;
+  --secondary: #6b78a6;
+  --accent: #8fa4d8;
+  --on-bg: #1f2937;
+  --on-primary: #ffffff;
+  --on-secondary: #ffffff;
+  --primary-700: #2f3a5e;
+  --primary-500: #5c6a96;
+  --primary-400: #7481ad;
+  --primary-300: #9aa4c7;
+  --primary-200: #c2c8e0;
+  --primary-100: #e4e7f2;
+  --primary-200-rgb: 194, 200, 224;
+  --primary-600-rgb: 49, 62, 105;
+  --gold: #d7c38a;
+  --gold-soft: rgba(215, 195, 138, 0.65);
+  /* Gradient */
+  --gradient-primary: linear-gradient(
+    rgba(var(--primary-200-rgb), 0.45) 0.1%,
+    rgba(var(--primary-600-rgb), 1) 100%
+  );
 }
 
 * {
@@ -50,8 +71,7 @@ header .logo img {
 
 .hero {
   height: 100vh;
-  background: linear-gradient(rgba(205, 250, 233, 0.4), rgba(112, 224, 183, 0.4)),
-    url("hero.jpg") center/cover no-repeat;
+  background: var(--gradient-primary), url("hero.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,9 +147,15 @@ header .logo img {
 }
 
 @keyframes tick {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .countdown span.tick {
@@ -199,7 +225,6 @@ p {
   background: rgba(0, 0, 0, 0.35);
 }
 
-
 .dark {
   background: #2a2a2a;
   color: #eee;
@@ -215,7 +240,7 @@ p {
   padding-bottom: 10px;
   display: flex;
   justify-content: center;
-  padding: 30px 0;  
+  padding: 30px 0;
 }
 
 .gallery {
@@ -231,8 +256,12 @@ p {
 }
 
 @keyframes scrollGallery {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .gallery-item {
@@ -296,7 +325,11 @@ p {
   inset: 0;
   border-radius: 20px;
   pointer-events: none;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0)
+  );
 }
 
 .reveal.show:hover {
@@ -307,6 +340,7 @@ p {
 .km-quote {
   font-family: "Noto Sans Khmer", "Battambang", "Hanuman", sans-serif;
   white-space: pre-wrap;
+  color: var(--on-primary);
 }
 
 .km-quote .w {
@@ -317,7 +351,10 @@ p {
 }
 
 @keyframes wordIn {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .love-poem p {
@@ -334,7 +371,7 @@ p {
 }
 
 .nameText {
-  color: var(--accent);
+  color: var(--gold);
   font-size: 1.8rem;
   font-weight: 500;
   font-family: "Noto Sans Khmer", "Battambang", "Hanuman", sans-serif;
@@ -346,6 +383,7 @@ p {
   opacity: 0.5;
   margin: 0 6px;
   letter-spacing: 1px;
+  color: var(--on-primary)
 }
 
 .three-col {
@@ -516,8 +554,13 @@ footer {
 }
 
 @keyframes softBlink {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .preserve {

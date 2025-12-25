@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,13 +13,15 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/x-icon" href="/assests/logo/logo.png" />
+    <link rel="stylesheet" href="css/agenda.css" />
+    <link rel="stylesheet" href="components/event_agenda.html" />
+    <link rel="icon" type="image/x-icon" href="/assets/logo/logo.png" />
   </head>
 
   <body>
     <header>
       <div class="logo">
-        <img src="/assests/logo/logo.png" />
+        <img src="/assets/logo/logo.png" />
       </div>
     </header>
 
@@ -42,14 +43,46 @@
           <div><span id="seconds">00</span><small>វិនាទី</small></div>
         </div>
         <p class="wedding-date" id="weddingMessage">២៦ មិថុនា ២០២៦</p>
-        <audio id="bgMusic" src="/assests/songs/photograph.mp3" loop></audio>
+        <audio id="bgMusic" src="/assets/songs/photograph.mp3" loop></audio>
       </div>
     </div>
 
-    <!-- ===== INTRO ===== -->
+    <div id="agenda"></div>
+
+
+    <section class="wedding-timeline">
+  <div class="agenda-container">
+    <div class="agenda-header">
+      <div class="agenda-text">
+        <h2 class="agenda-title">Wedding Location</h2>
+        <p class="agenda-subtitle">ទីតាំង កម្មវិធីអាពាហ៍ពិពាហ៍</p>
+      </div>
+ <div class="map-embed">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1914.8024964758313!2d104.89138172715782!3d11.509283717324266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951a2a6ea6fef%3A0x29fb0ab8e6c666aa!2zU0FMTEUgQ0hBTUtBUiBET1VORyDhnp_hnrbhnpsg4Z6F4Z-G4Z6A4Z624Z6a4Z6K4Z684Z6E!5e0!3m2!1sen!2skh!4v1766677339744!5m2!1sen!2skh"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+
+      <a
+        class="map-btn map-btn--inside"
+        href="https://maps.app.goo.gl/QAGy656eXb2VGuLr9"
+        target="_blank"
+        rel="noopener"
+      >
+        🧭 បើកផែនទី
+      </a>
+    </div>
+  </div>
+</section>
+
+
+   
+
     <section class="two-col">
       <img
-        src="assests/collections/img_collection_2.jpg"
+        src="assets/collections/img_collection_2.jpg"
         alt="Story"
         class="reveal"
       />
@@ -59,13 +92,10 @@
           ជីវិត្តយើងរស់នៅមិនយូរទេ, យើងគួរណាបង្កើតការចងចាំល្អៗឲបានច្រើន
           ទាន់នៅអាចមើលឃើញ ប៉ះបាន ទៅដល់ នឹងដឹងក្លិនពីវា។
           ការចាប់ដៃគ្នាមិនមែន១វិនាទី គឺរហូត កាន់ដូចម្តាយយើងកាន់ដៃយើង ដើរ រត់
-          កាន់ពេលគាត់នឹកបារម្ភពីយើង។ ស្រឡាញ់គ្នាដូចយើងស្រឡាញ់គ្រួសារយើង។
-
-
-           ១-២-៣ កុំលេងដីកើតមេរោគ៌ ជាចម្រៀងពេលនៅក្មេង តែបើអ្នកស្រលាញ់នរណាម្នាក់ 
-           ១ យកយល់គ្នា គោរពគ្នាអត់ឱនឲគ្នា 
-           ២ ជឿជាក់នឹង ផ្ដល់សេចក្ដីស្រលាញ់ឲគ្នា 
-           ៣ សាងអនាគតល្អជាមួយគ្នា ធ្វើឲបានដូចអ្នកមានគុណយើង!
+          កាន់ពេលគាត់នឹកបារម្ភពីយើង។ ស្រឡាញ់គ្នាដូចយើងស្រឡាញ់គ្រួសារយើង។ ១-២-៣
+          កុំលេងដីកើតមេរោគ៌ ជាចម្រៀងពេលនៅក្មេង តែបើអ្នកស្រលាញ់នរណាម្នាក់ ១
+          យកយល់គ្នា គោរពគ្នាអត់ឱនឲគ្នា ២ ជឿជាក់នឹង ផ្ដល់សេចក្ដីស្រលាញ់ឲគ្នា ៣
+          សាងអនាគតល្អជាមួយគ្នា ធ្វើឲបានដូចអ្នកមានគុណយើង!
         </p>
       </div>
     </section>
@@ -98,7 +128,7 @@
           <p>នៅគ្រប់ទីកន្លែងដែលនៃជីវិត្ត</p>
         </div>
       </div>
-      <img src="assests/imgs/youding_party.jpeg" alt="Couple" class="reveal" />
+      <img src="assets/imgs/youding_party.jpeg" alt="Couple" class="reveal" />
     </section>
 
     <!-- ===== GALLERY ===== -->

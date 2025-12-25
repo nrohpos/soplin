@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   observeReveals();
-  
 
   // expose for dynamically added images
   window.observeReveals = observeReveals;
@@ -152,9 +151,9 @@ const timer = setInterval(updateCountdown, 1000);
 /* ===== Gallery Load Image ===== */
 async function loadGallery() {
   const gallery = document.getElementById("gallery");
-  const imageFolder = "/assests/collections/";
+  const imageFolder = "/assets/collections/";
   const imagesPerGroup = 2;
-  const res = await fetch("/assests/manifest.json");
+  const res = await fetch("/assets/manifest.json");
   const data = await res.json();
 
   for (let i = 0; i < data.images.length; i += imagesPerGroup) {
@@ -200,19 +199,19 @@ function getRandomMessage() {
 }
 
 function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
 
 // Load wish
 async function loadWishes() {
-  const res = await fetch("/assests/manifest.json");
+  const res = await fetch("/assets/manifest.json");
   const data = await res.json();
   const khmerWishes = data.words || [];
   const englishWishes = data.wordsEnglish || [];
-  dataWishList = khmerWishes.concat(englishWishes)
+  dataWishList = khmerWishes.concat(englishWishes);
   shuffleArray(dataWishList);
   defaultMessage = getRandomMessage();
 }
@@ -307,3 +306,77 @@ wishSend.addEventListener("click", () => {
     congratsBtn.style.opacity = "0.75";
   });
 });
+
+async function loadAgenda() {
+  try {
+
+    const htmlRes = await fetch("./components/wedding-agenda.html");
+    document.getElementById("agenda").innerHTML = await htmlRes.text();
+
+
+    const dataRes = await fetch("assets/manifest.json");
+    const data = await dataRes.json();
+
+
+    renderAgenda(data.agenda);
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("agenda").innerHTML =
+      "<p style='color:#d7c38a'>Failed to load agenda</p>";
+  }
+}
+
+loadAgenda();
+
+function connectorHTML() {
+  return `
+    <div class="connector" aria-hidden="true">
+      <div class="seg"></div>
+      <div class="kbach">
+        <span class="top"></span>
+        <span class="bottom"></span>
+        <i class="left"></i>
+        <i class="right"></i>
+      </div>
+      <div class="seg"></div>
+    </div>
+  `;
+}
+
+function stopHTML(item) {
+  const compactClass = item.compact ? " compact" : "";
+  return `
+    <div class="stop${compactClass}">
+      <div class="time">${item.time}</div>
+      <div class="desc">${item.desc}</div>
+    </div>
+  `;
+}
+
+function locationHTML(item) {
+  return `
+    <div class="location">
+      <div class="time">${item.time}</div>
+      <div class="place">${item.place}</div>
+      <div class="addr">${item.addr}</div>
+      ${item.note ? `<div class="note">${item.note}</div>` : ""}
+    </div>
+  `;
+}
+
+function renderAgenda(list) {
+  const timeline = document.getElementById("timeline");
+  if (!timeline) {
+    console.error("No #timeline found (agenda HTML not loaded yet).");
+    return;
+  }
+
+  timeline.innerHTML = "";
+  list.forEach((item, index) => {
+    if (item.type === "stop") timeline.insertAdjacentHTML("beforeend", stopHTML(item));
+    else if (item.type === "location") timeline.insertAdjacentHTML("beforeend", locationHTML(item));
+
+    if (index !== list.length - 1) timeline.insertAdjacentHTML("beforeend", connectorHTML());
+  });
+}

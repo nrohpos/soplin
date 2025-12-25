@@ -1,0 +1,254 @@
+/* css/agenda.css */
+@import url("/style.css");
+
+/* SECTION */
+.wedding-timeline {
+  background: var(--primary);
+  color: var(--gold);
+  padding: clamp(60px, 10vw, 120px) 16px;
+}
+
+/* ONE centered container for BOTH header + timeline */
+.wedding-timeline .agenda-container {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* HEADER (text + dot aligned to timeline axis) */
+.wedding-timeline .agenda-header {
+  margin-bottom: 42px;
+  text-align: center;
+}
+
+.wedding-timeline .agenda-text {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.wedding-timeline .agenda-title {
+  font-family: "Cinzel", serif;
+  font-size: clamp(26px, 3.5vw, 44px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.wedding-timeline .agenda-subtitle {
+  font-family: "Hanuman", serif;
+  color: var(--gold)
+  font-size: clamp(18px, 2.2vw, 26px);
+  margin: 0;
+  opacity: 0.85;
+  line-height: 1.1;
+}
+
+/* Dot aligned with timeline center line */
+.wedding-timeline .agenda-dot-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.wedding-timeline .agenda-dot {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--gold-soft);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* small connecting line under the dot */
+.wedding-timeline .agenda-dot-line {
+  width: 2px;
+  height: 18px;
+  margin-top: 8px;
+  background: linear-gradient(to bottom, var(--gold-soft), transparent);
+}
+
+/* TIMELINE */
+.wedding-timeline .timeline {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.wedding-timeline .stop,
+.wedding-timeline .location {
+  padding: 18px 0 10px;
+}
+
+.wedding-timeline .time {
+  font-family: "Cinzel", serif;
+  font-size: clamp(34px, 5.2vw, 56px);
+  font-weight: 600;
+}
+
+.wedding-timeline .desc {
+  font-family: "Hanuman", serif;
+  font-size: clamp(18px, 2.3vw, 26px);
+  margin-top: 6px;
+}
+
+/* CONNECTOR */
+.wedding-timeline .connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0;
+}
+
+.wedding-timeline .seg {
+  width: 2px;
+  height: 22px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--gold-soft),
+    transparent
+  );
+}
+
+/* Kbach ornament */
+.wedding-timeline .kbach {
+  position: relative;
+  width: 28px;
+  height: 40px;
+  filter: drop-shadow(0 0 8px rgba(215, 195, 138, 0.3));
+}
+
+.wedding-timeline .kbach::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  transform: rotate(45deg);
+  border: 2px solid var(--gold);
+}
+
+.wedding-timeline .kbach::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 2px solid rgba(215, 195, 138, 0.6);
+}
+
+.wedding-timeline .kbach span {
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border: 2px solid rgba(215, 195, 138, 0.6);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.wedding-timeline .kbach .top { top: 0; }
+.wedding-timeline .kbach .bottom { bottom: 0; }
+
+.wedding-timeline .kbach i {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(215, 195, 138, 0.45);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.wedding-timeline .kbach i.left { left: -8px; }
+.wedding-timeline .kbach i.right { right: -8px; }
+
+/* LOCATION */
+.wedding-timeline .place {
+  font-family: "Cinzel", serif;
+  font-size: clamp(20px, 2.4vw, 30px);
+  margin-top: 10px;
+}
+
+.wedding-timeline .addr,
+.wedding-timeline .note {
+  opacity: 0.85;
+  margin-top: 6px;
+}
+
+.wedding-timeline .compact {
+  padding-top: 12px;
+}
+
+.map-embed {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 24px 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+}
+
+/* iframe */
+.map-embed iframe {
+  width: 100%;
+  height: 360px;
+  border: 0;
+  display: block;
+}
+
+/* Button INSIDE map */
+.map-btn--inside {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+
+  padding: 12px 18px;
+  border-radius: 16px;
+
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+
+  color: #fff;
+  background: linear-gradient(135deg, #d4af37, #b89b6a);
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+
+  backdrop-filter: blur(6px);
+
+  opacity: 0;
+  animation: mapBtnIn 0.9s ease forwards;
+}
+
+.map-btn--inside:hover {
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* fade-in animation */
+@keyframes mapBtnIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .map-embed iframe {
+    height: 220px;
+  }
+
+  .map-btn--inside {
+    font-size: 0.85rem;
+    padding: 10px 16px;
+  }
+}
