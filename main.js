@@ -3,27 +3,25 @@ function setupBackgroundMusic() {
   const btn = document.getElementById("musicBtn");
   if (!musicEl || !btn) return;
 
-  // prevent double init
   if (btn.dataset.init === "1") return;
   btn.dataset.init = "1";
 
   musicEl.loop = true;
   musicEl.volume = 0.25;
 
-  let userPaused = false; // ✅ if user pauses, never auto-play again
+  let userPaused = false;
 
-  const setIcon = () => {
-    btn.textContent = musicEl.paused ? "🔊" : "🔇";
-  };
+  const setIcon = () => (btn.textContent = musicEl.paused ? "🔊" : "🔇");
 
-  async function safePlay() {
-    if (userPaused) return; // ✅ respect user choice
+  async function tryPlay() {
+    if (userPaused) return false;
     try {
       await musicEl.play();
       setIcon();
-    } catch (e) {
-      // autoplay blocked, we will wait for first gesture
+      return true;
+    } catch {
       setIcon();
+      return false;
     }
   }
 
@@ -33,30 +31,50 @@ function setupBackgroundMusic() {
     setIcon();
   }
 
-  // ✅ Toggle by button
+  async function playMusic() {
+    userPaused = false;
+    await tryPlay();
+  }
+
+  // Toggle button
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
-    e.stopPropagation(); // don't count as page click unlock
-
-    if (musicEl.paused) {
-      userPaused = false;      // user wants play
-      await safePlay();
-    } else {
-      pauseMusic();            // user wants pause
-    }
+    e.stopPropagation();
+    if (musicEl.paused) await playMusic();
+    else pauseMusic();
   });
 
-  // ✅ Try autoplay on first load
-  safePlay();
-
-  // ✅ If autoplay is blocked, start on first user gesture (ONLY if user didn't pause)
-  const unlockOnce = () => safePlay();
-  document.addEventListener("pointerdown", unlockOnce, { once: true });
-  document.addEventListener("keydown", unlockOnce, { once: true });
-
-  // keep icon synced
-  musicEl.addEventListener("play", setIcon);
+  // Hard lock if user paused
+  musicEl.addEventListener("play", () => {
+    if (userPaused) musicEl.pause();
+    setIcon();
+  });
   musicEl.addEventListener("pause", setIcon);
+
+  // Try autoplay once
+  tryPlay();
+
+  // Unlock on ANY interaction (scroll works mainly desktop)
+  const unlock = async () => {
+    const ok = await tryPlay();
+    if (!ok) return;
+
+    // remove all once it works
+    window.removeEventListener("wheel", unlock, true);
+    window.removeEventListener("scroll", unlock, true);
+    window.removeEventListener("pointerdown", unlock, true);
+    window.removeEventListener("touchstart", unlock, true);
+    window.removeEventListener("click", unlock, true);
+    window.removeEventListener("keydown", unlock, true);
+  };
+
+  // capture=true so it triggers even if something stops propagation
+  window.addEventListener("wheel", unlock, { capture: true, passive: true });
+  window.addEventListener("scroll", unlock, { capture: true, passive: true });
+  window.addEventListener("pointerdown", unlock, true);  // mouse/pen
+  window.addEventListener("touchstart", unlock, true);   // mobile tap
+  window.addEventListener("click", unlock, true);        // fallback
+  window.addEventListener("keydown", unlock, true);
 
   setIcon();
 }
