@@ -1,8 +1,107 @@
+function setupBackgroundMusic() {
+  const musicEl = document.getElementById("bgMusic");
+  const btn = document.getElementById("musicBtn");
+  if (!musicEl || !btn) return;
+
+  // prevent double init
+  if (btn.dataset.init === "1") return;
+  btn.dataset.init = "1";
+
+  musicEl.loop = true;
+  musicEl.volume = 0.25;
+
+  let userPaused = false; // ✅ if user pauses, never auto-play again
+
+  const setIcon = () => {
+    btn.textContent = musicEl.paused ? "🔊" : "🔇";
+  };
+
+  async function safePlay() {
+    if (userPaused) return; // ✅ respect user choice
+    try {
+      await musicEl.play();
+      setIcon();
+    } catch (e) {
+      // autoplay blocked, we will wait for first gesture
+      setIcon();
+    }
+  }
+
+  function pauseMusic() {
+    userPaused = true;
+    musicEl.pause();
+    setIcon();
+  }
+
+  // ✅ Toggle by button
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // don't count as page click unlock
+
+    if (musicEl.paused) {
+      userPaused = false;      // user wants play
+      await safePlay();
+    } else {
+      pauseMusic();            // user wants pause
+    }
+  });
+
+  // ✅ Try autoplay on first load
+  safePlay();
+
+  // ✅ If autoplay is blocked, start on first user gesture (ONLY if user didn't pause)
+  const unlockOnce = () => safePlay();
+  document.addEventListener("pointerdown", unlockOnce, { once: true });
+  document.addEventListener("keydown", unlockOnce, { once: true });
+
+  // keep icon synced
+  musicEl.addEventListener("play", setIcon);
+  musicEl.addEventListener("pause", setIcon);
+
+  setIcon();
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
+  const lines = document.querySelectorAll(".love-poem p");
+  const elPreserveHeader = document.getElementById("preserveHeader");
+  if (!elPreserveHeader) return;
+
+  setupBackgroundMusic();
+
+  const rawText = elPreserveHeader.textContent.trim();
+  elPreserveHeader.textContent = "";
+
+  // Khmer-safe word segmentation
+  const segmenter =
+    "Segmenter" in Intl
+      ? new Intl.Segmenter("km", { granularity: "word" })
+      : null;
+
+  const words = segmenter
+    ? Array.from(segmenter.segment(rawText), (s) => s.segment)
+    : rawText.split(/\s+/);
+
+  // build spans (but keep hidden)
+  words.forEach((word, i) => {
+    if (!word.trim()) {
+      elPreserveHeader.appendChild(document.createTextNode(" "));
+      return;
+    }
+
+    const span = document.createElement("span");
+    span.className = "word";
+    span.textContent = word;
+    span.style.animationDelay = `${i * 0.08}s`;
+    elPreserveHeader.appendChild(span);
+    elPreserveHeader.appendChild(document.createTextNode(" "));
+  });
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          elPreserveHeader.querySelectorAll(".word").forEach((w) => {
+            w.style.animationPlayState = "running";
+          });
           entry.target.classList.add("show");
         } else {
           entry.target.classList.remove("show");
@@ -15,6 +114,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   );
 
+  lines.forEach((line) => observer.observe(line));
+
+  elPreserveHeader.querySelectorAll(".word").forEach((w) => {
+    w.style.animationPlayState = "paused";
+  });
+  observer.observe(elPreserveHeader);
   function observeReveals() {
     document.querySelectorAll(".reveal").forEach((el) => {
       observer.observe(el);
@@ -25,11 +130,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // expose for dynamically added images
   window.observeReveals = observeReveals;
-
-  const lines = document.querySelectorAll(".love-poem p");
   await loadWishes();
   await loadGallery();
-  lines.forEach((line) => observer.observe(line));
 });
 /* ===== QOUTE ANIMATE ===== */
 const el = document.getElementById("animatedText");
@@ -108,9 +210,8 @@ function updateCountdown() {
 
   if (distance <= 0) {
     document.querySelector(".countdown").style.display = "none";
-    messageEl.textContent = "❤️ យើងកំពុងរៀបអាពាហ៍ពិពាហ៍! 💍";
+    messageEl.textContent = "❤️ យើងរៀបអាពាហ៍ពិពាហ៍! 💍";
     messageEl.style.fontSize = "1.2rem";
-    if (musicEl) musicEl.play().catch(() => {});
     clearInterval(timer);
     return;
   }
@@ -284,7 +385,7 @@ wishSend.addEventListener("click", () => {
   wishSend.textContent = "កំពុងផ្ញើរ...";
 
   const telegramBotToken = "8463447682:AAFOE_gow0ihmh7tG31cGCdQXq_BidlSj44";
-  const groupID = "-1003268717262";
+  const groupID = "-1003520846681";
   const messageThreadId = ""; // optional
   // Fire-and-forget (no response needed)
   fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
@@ -306,28 +407,6 @@ wishSend.addEventListener("click", () => {
     congratsBtn.style.opacity = "0.75";
   });
 });
-
-async function loadAgenda() {
-  try {
-
-    const htmlRes = await fetch("./components/wedding-agenda.html");
-    document.getElementById("agenda").innerHTML = await htmlRes.text();
-
-
-    const dataRes = await fetch("assets/manifest.json");
-    const data = await dataRes.json();
-
-
-    renderAgenda(data.agenda);
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("agenda").innerHTML =
-      "<p style='color:#d7c38a'>Failed to load agenda</p>";
-  }
-}
-
-loadAgenda();
 
 function connectorHTML() {
   return `
@@ -374,9 +453,129 @@ function renderAgenda(list) {
 
   timeline.innerHTML = "";
   list.forEach((item, index) => {
-    if (item.type === "stop") timeline.insertAdjacentHTML("beforeend", stopHTML(item));
-    else if (item.type === "location") timeline.insertAdjacentHTML("beforeend", locationHTML(item));
+    if (item.type === "stop")
+      timeline.insertAdjacentHTML("beforeend", stopHTML(item));
+    else if (item.type === "location")
+      timeline.insertAdjacentHTML("beforeend", locationHTML(item));
 
-    if (index !== list.length - 1) timeline.insertAdjacentHTML("beforeend", connectorHTML());
+    if (index !== list.length - 1)
+      timeline.insertAdjacentHTML("beforeend", connectorHTML());
   });
 }
+
+function animateTimelineItems() {
+  const timeline = document.getElementById("timeline");
+  if (!timeline) return;
+
+  const items = timeline.querySelectorAll(".stop, .location, .connector");
+  if (!items.length) return;
+
+  // Turn on animation mode only after items exist
+  timeline.classList.add("anim-ready");
+
+  // stagger delay
+  items.forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.08}s`;
+  });
+
+  // Fallback: if IntersectionObserver not supported, just show all
+  if (!("IntersectionObserver" in window)) {
+    items.forEach((el) => el.classList.add("show"));
+    return;
+  }
+
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("show", entry.isIntersecting);
+      });
+    },
+    { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+  );
+
+  items.forEach((el) => obs.observe(el));
+}
+
+async function loadAgenda() {
+  try {
+    const htmlRes = await fetch("./components/wedding-agenda.html");
+    document.getElementById("agenda").innerHTML = await htmlRes.text();
+
+    const dataRes = await fetch("assets/manifest.json");
+    const data = await dataRes.json();
+
+    agenda = data.agenda;
+    renderAgenda(data.agenda);
+    animateTimelineItems(); // ✅ run AFTER items exist
+  } catch (err) {
+    console.error(err);
+    document.getElementById("agenda").innerHTML =
+      "<p style='color:#d7c38a'>Failed to load agenda</p>";
+  }
+}
+
+loadAgenda();
+function randomQuiltSize(prev) {
+  const sizes = [
+    "size-1", // small
+    "size-2", // medium
+    "size-3", // large
+    "size-4", // extra large
+  ];
+
+  // weights (favor small tiles)
+  const weighted = [
+    "size-1",
+    "size-1",
+    "size-1",
+    "size-2",
+    "size-2",
+    "size-3",
+    "size-4",
+  ];
+
+  let pick;
+  do {
+    pick = weighted[Math.floor(Math.random() * weighted.length)];
+  } while (
+    (prev === "size-4" && pick === "size-4") ||
+    (prev === "size-3" && pick === "size-4")
+  );
+
+  return pick;
+}
+
+async function loadRandomQuiltedGallery() {
+  const grid = document.getElementById("quiltedGallery");
+  if (!grid) return;
+
+  const res = await fetch("/assets/manifest.json");
+  const data = await res.json();
+
+  const images = data.images || [];
+  const base = "/assets/collections/";
+
+  let prevSize = null;
+
+  images.forEach((file, i) => {
+    const size = randomQuiltSize(prevSize);
+    prevSize = size;
+
+    const item = document.createElement("div");
+    item.className = `quilted-item ${size}`;
+
+    const img = document.createElement("img");
+    img.src = base + file;
+    img.loading = "lazy";
+
+    item.appendChild(img);
+    grid.appendChild(item);
+
+    item.addEventListener("click", () => {
+      modal.classList.add("active");
+      modalImg.src = img.src;
+    });
+  });
+}
+
+loadRandomQuiltedGallery();

@@ -43,7 +43,10 @@
           <div><span id="seconds">00</span><small>វិនាទី</small></div>
         </div>
         <p class="wedding-date" id="weddingMessage">២៦ មិថុនា ២០២៦</p>
-        <audio id="bgMusic" src="/assets/songs/photograph.mp3" loop></audio>
+        <audio id="bgMusic" src="/assets/songs/somewhere_over_rainbow.mp3" loop></audio>
+        <button id="musicBtn" class="music-btn" type="button">
+          🔊 Music
+        </button>
       </div>
     </div>
 
@@ -76,10 +79,6 @@
     </div>
   </div>
 </section>
-
-
-   
-
     <section class="two-col">
       <img
         src="assets/collections/img_collection_2.jpg"
@@ -87,15 +86,19 @@
         class="reveal"
       />
       <div>
-        <h2>តម្លៃនៃពេលវេលា ថ្ងៃណាក៏មានន័យឲតែយើងបានសើច</h2>
+        <h2 id="preserveHeader" class="preserve-header">តម្លៃនៃពេលវេលា ថ្ងៃណាក៏មានន័យឲតែយើងបានសើច</h2>
         <p class="preserve">
           ជីវិត្តយើងរស់នៅមិនយូរទេ, យើងគួរណាបង្កើតការចងចាំល្អៗឲបានច្រើន
           ទាន់នៅអាចមើលឃើញ ប៉ះបាន ទៅដល់ នឹងដឹងក្លិនពីវា។
           ការចាប់ដៃគ្នាមិនមែន១វិនាទី គឺរហូត កាន់ដូចម្តាយយើងកាន់ដៃយើង ដើរ រត់
-          កាន់ពេលគាត់នឹកបារម្ភពីយើង។ ស្រឡាញ់គ្នាដូចយើងស្រឡាញ់គ្រួសារយើង។ ១-២-៣
-          កុំលេងដីកើតមេរោគ៌ ជាចម្រៀងពេលនៅក្មេង តែបើអ្នកស្រលាញ់នរណាម្នាក់ ១
-          យកយល់គ្នា គោរពគ្នាអត់ឱនឲគ្នា ២ ជឿជាក់នឹង ផ្ដល់សេចក្ដីស្រលាញ់ឲគ្នា ៣
-          សាងអនាគតល្អជាមួយគ្នា ធ្វើឲបានដូចអ្នកមានគុណយើង!
+          កាន់ពេលគាត់នឹកបារម្ភពីយើង។ ស្រឡាញ់គ្នាដូចយើងស្រឡាញ់គ្រួសារយើង។ 
+          
+          
+          ១-២-៣
+          កុំលេងដីកើតមេរោគ៌ ជាចម្រៀងពេលនៅក្មេង តែបើអ្នកស្រលាញ់នរណាម្នាក់ 
+          ១ យោគយល់គ្នា គោរពគ្នាអត់ឱនឲគ្នា 
+          ២ ជឿជាក់នឹង ផ្ដល់សេចក្ដីស្រលាញ់ឲគ្នា 
+          ៣ សាងអនាគតល្អជាមួយគ្នា ធ្វើឲបានដូចអ្នកមានគុណយើង!
         </p>
       </div>
     </section>
@@ -111,9 +114,9 @@
     </div>
 
     <!-- ===== DARK STORY ===== -->
-    <section class="dark two-col">
+    <section class="two-col">
       <div>
-        <h2>យើងជួបគ្នា តាមផ្លូវណា...</h2>
+        <h2 class="love-header">យើងជួបគ្នា តាមផ្លូវណា...</h2>
         <div class="love-poem">
           <p>ឆ្នាំ២០២០ ជាឆ្នាំដែលវាសនានាំឲ្យយើងជួបគ្នា</p>
           <p>នៅកន្លែងធ្វើការមួយ ឈ្មោះថា Gaea-Sys</p>
@@ -131,15 +134,17 @@
       <img src="assets/imgs/youding_party.jpeg" alt="Couple" class="reveal" />
     </section>
 
-    <!-- ===== GALLERY ===== -->
-    <section>
-      <h2 style="text-align: center; margin-bottom: 40px">
-        រូបអនុស្សាវរីយ៍ នៃយើងទាំងទ្វេរ
-      </h2>
-      <div class="gallery-wrapper">
-        <div class="gallery" id="gallery"></div>
-      </div>
-    </section>
+<section class="quilted-section">
+  <h2 class="quilted-title">
+    រូបអនុស្សាវរីយ៍ នៃយើងទាំងទ្វេរ
+  </h2>
+
+  <div class="quilted-collection">
+    <div class="quilted-grid" id="quiltedGallery"></div>
+  </div>
+</section>
+
+
 
     <!-- ===== MODAL ===== -->
     <div class="modal" id="modal">
@@ -163,7 +168,7 @@
           class="wish-input"
           rows="4"
           maxlength="300"
-          placeholder="Write your congratulations message..."
+          placeholder="សរសេរ នូវពាក្យពរជ៍យ..."
         ></textarea>
 
         <div class="wish-actions">
@@ -184,7 +189,7 @@
         rel="noopener"
         class="footer-link"
       >
-        មើលពាក្យជូនពរ…
+        មើលពាក្យជូនពរជ៍យ…
       </a>
     </footer>
     <script src="main.js"></script>

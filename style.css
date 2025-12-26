@@ -71,13 +71,41 @@ header .logo img {
 
 .hero {
   height: 100vh;
-  background: var(--gradient-primary), url("hero.jpg") center/cover no-repeat;
+  background: var(--gradient-primary),
+    url("/assets/collections/img_collection_5.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: #fff;
   padding: 0 10%;
+}
+
+.music-btn {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 10000;
+
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.music-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 .hero h1 {
@@ -179,6 +207,7 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   align-items: center;
+  background: var(--primary);
 }
 
 h2 {
@@ -232,56 +261,6 @@ p {
 
 .dark p {
   color: #ccc;
-}
-
-.gallery-wrapper {
-  position: relative;
-  overflow: hidden;
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  padding: 30px 0;
-}
-
-.gallery {
-  display: flex;
-  gap: 44px;
-  width: max-content;
-  margin: 0 auto;
-  animation: scrollGallery 15s linear infinite;
-}
-
-.gallery-wrapper:hover .gallery {
-  animation-play-state: paused;
-}
-
-@keyframes scrollGallery {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.gallery-item {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  min-width: 300px;
-}
-
-.gallery-item img {
-  height: 240px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.gallery-item img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .modal {
@@ -357,12 +336,37 @@ p {
   }
 }
 
+.preserve-header {
+  color: var(--gold);
+  font-family: "Noto Sans Khmer", "Hanuman", serif;
+  line-height: 1.6;
+}
+
+.preserve-header .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-24px);
+  animation: dropIn 0.7s ease forwards;
+}
+
+@keyframes dropIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.love-header {
+  color: var(--gold);
+}
+
 .love-poem p {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 1s ease, transform 1s ease;
   font-family: "Noto Sans Khmer", "Battambang", "Hanuman", sans-serif;
   line-height: 1.9;
+  color: var(--gold);
 }
 
 .love-poem p.show {
@@ -383,7 +387,7 @@ p {
   opacity: 0.5;
   margin: 0 6px;
   letter-spacing: 1px;
-  color: var(--on-primary)
+  color: var(--on-primary);
 }
 
 .three-col {
@@ -525,9 +529,6 @@ p {
   filter: grayscale(30%);
 }
 
-/* =========================
-   FOOTER
-========================= */
 footer {
   padding: 40px 10%;
   text-align: center;
@@ -565,6 +566,7 @@ footer {
 
 .preserve {
   white-space: pre-line;
+  color: var(--gold);
 }
 
 @media (max-width: 900px) {
@@ -619,6 +621,11 @@ footer {
   .image-stack img {
     height: 200px;
   }
+
+  .quilted-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -644,8 +651,157 @@ footer {
     font-size: 0.8rem;
     padding: 12px 20px;
   }
+}
 
-  .gallery {
-    animation-duration: 10s;
+.quilted-collection {
+  max-width: 1200px; /* control width */
+  margin: 0 auto; /* center horizontally */
+  padding: 0 16px; /* safe padding on mobile */
+}
+
+.quilted-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+/* each tile */
+.quilted-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #eee;
+  min-height: 160px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  transform: translateY(30px) scale(0.96);
+  transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.8s ease;
+}
+
+.quilted-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.quilted-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.quilted-item:hover img {
+  transform: scale(1.08);
+  filter: brightness(0.92);
+}
+
+/* quilt sizes (span rules) */
+.quilted-item.size-1 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.quilted-item.size-2 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.quilted-item.size-3 {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+.quilted-item.size-4 {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .quilted-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  /* ✅ force every tile to 1x1 on mobile */
+  .quilted-item {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    border-radius: 10px;
+    min-height: auto;
+    aspect-ratio: 1 / 1; /* square tiles */
+  }
+
+  .music-btn {
+    top: 12px;
+    right: 12px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+.quilted-section {
+  position: relative;
+  padding: 100px 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--primary-600-rgb), 1) 100%,
+    rgba(var(--primary-200-rgb), 0.45) 1%
+  );
+}
+
+.quilted-section::before,
+.quilted-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 140px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.quilted-section::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--primary-600-rgb), 1) 100%,
+    rgba(var(--primary-200-rgb), 0.45) 1%
+  );
+}
+
+.quilted-section::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.2),
+    rgba(243, 237, 228, 0)
+  );
+}
+
+.quilted-title,
+.quilted-collection {
+  position: relative;
+  z-index: 2;
+}
+
+.quilted-title {
+  max-width: 1200px;
+  margin: 0 auto 50px;
+  padding: 0 16px;
+  text-align: center;
+  margin-bottom: 50px;
+  font-family: "Noto Sans Khmer", "Hanuman", serif;
+  font-size: clamp(22px, 3vw, 32px);
+  color: #b89b6a;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 600px) {
+  .quilted-section {
+    padding: 60px 0;
+  }
+  .quilted-collection,
+  .quilted-title {
+    padding: 0 12px;
   }
 }

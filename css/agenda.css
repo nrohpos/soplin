@@ -40,7 +40,7 @@
 
 .wedding-timeline .agenda-subtitle {
   font-family: "Hanuman", serif;
-  color: var(--gold)
+  color: var(--gold);
   font-size: clamp(18px, 2.2vw, 26px);
   margin: 0;
   opacity: 0.85;
@@ -251,4 +251,27 @@
     font-size: 0.85rem;
     padding: 10px 16px;
   }
+}
+
+
+/* visible by default */
+.wedding-timeline .stop,
+.wedding-timeline .location,
+.wedding-timeline .connector {
+  opacity: 1;
+  transform: none;
+}
+
+/* only animate when JS adds .anim-ready on #timeline */
+#timeline.anim-ready .stop,
+#timeline.anim-ready .location,
+#timeline.anim-ready .connector {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#timeline.anim-ready .show {
+  opacity: 1;
+  transform: translateY(0);
 }
