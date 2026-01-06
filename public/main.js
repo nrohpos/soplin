@@ -71,9 +71,9 @@ function setupBackgroundMusic() {
   // capture=true so it triggers even if something stops propagation
   window.addEventListener("wheel", unlock, { capture: true, passive: true });
   window.addEventListener("scroll", unlock, { capture: true, passive: true });
-  window.addEventListener("pointerdown", unlock, true);  // mouse/pen
-  window.addEventListener("touchstart", unlock, true);   // mobile tap
-  window.addEventListener("click", unlock, true);        // fallback
+  window.addEventListener("pointerdown", unlock, true); // mouse/pen
+  window.addEventListener("touchstart", unlock, true); // mobile tap
+  window.addEventListener("click", unlock, true); // fallback
   window.addEventListener("keydown", unlock, true);
 
   setIcon();

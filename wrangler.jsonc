@@ -1,0 +1,8 @@
+{
+  "name": "templateone",
+  "compatibility_date": "2026-01-06",
+  "main": "index.js",
+  "assets": {
+    "directory": "public"
+  }
+}
