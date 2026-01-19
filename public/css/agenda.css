@@ -3,7 +3,6 @@
 
 /* SECTION */
 .wedding-timeline {
-  background: var(--primary);
   color: var(--gold);
   padding: clamp(60px, 10vw, 120px) 16px;
 }

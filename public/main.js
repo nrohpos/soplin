@@ -524,7 +524,7 @@ async function loadAgenda() {
 
     agenda = data.agenda;
     renderAgenda(data.agenda);
-    animateTimelineItems(); // ✅ run AFTER items exist
+    animateTimelineItems();
   } catch (err) {
     console.error(err);
     document.getElementById("agenda").innerHTML =
@@ -534,13 +534,6 @@ async function loadAgenda() {
 
 loadAgenda();
 function randomQuiltSize(prev) {
-  const sizes = [
-    "size-1", // small
-    "size-2", // medium
-    "size-3", // large
-    "size-4", // extra large
-  ];
-
   // weights (favor small tiles)
   const weighted = [
     "size-1",
