@@ -309,7 +309,7 @@ header .logo img {
 .preserve-header {
   color: var(--on-secondary);
   font-family: "Noto Sans Khmer", "Hanuman", serif;
-  line-height: 1.6;
+  
 }
 .preserve-header .word {
   display: inline-block;

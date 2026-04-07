@@ -571,45 +571,12 @@ async function loadAgenda() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const lines = document.querySelectorAll(".love-poem p");
-  const elPreserveHeader = document.getElementById("preserveHeader");
-  if (!elPreserveHeader) return;
-
   setupBackgroundMusic();
 
-  const rawText = elPreserveHeader.textContent.trim();
-  elPreserveHeader.textContent = "";
-
-  // Khmer-safe word segmentation
-  const segmenter =
-    "Segmenter" in Intl
-      ? new Intl.Segmenter("km", { granularity: "word" })
-      : null;
-
-  const words = segmenter
-    ? Array.from(segmenter.segment(rawText), (s) => s.segment)
-    : rawText.split(/\s+/);
-
-  // build spans (but keep hidden)
-  words.forEach((word, i) => {
-    if (!word.trim()) {
-      elPreserveHeader.appendChild(document.createTextNode(" "));
-      return;
-    }
-
-    const span = document.createElement("span");
-    span.className = "word";
-    span.textContent = word;
-    span.style.animationDelay = `${i * 0.08}s`;
-    elPreserveHeader.appendChild(span);
-    elPreserveHeader.appendChild(document.createTextNode(" "));
-  });
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          elPreserveHeader.querySelectorAll(".word").forEach((w) => {
-            w.style.animationPlayState = "running";
-          });
           entry.target.classList.add("show");
           runAgendaAnimations();
         } else {
@@ -625,10 +592,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   lines.forEach((line) => observer.observe(line));
   observer.observe(document.getElementById('eventAgenda'));
-  elPreserveHeader.querySelectorAll(".word").forEach((w) => {
-    w.style.animationPlayState = "paused";
-  });
-  observer.observe(elPreserveHeader);
   function observeReveals() {
     document.querySelectorAll(".reveal").forEach((el) => {
       observer.observe(el);
