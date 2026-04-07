@@ -1,15 +1,24 @@
 {
   "images": [
-    "img_collection_0.jpg",
-    "img_collection_1.jpg",
-    "img_collection_2.jpg",
-    "img_collection_3.jpg",
-    "img_collection_4.jpg",
-    "img_collection_5.jpg",
-    "img_collection_6.jpg",
-    "img_collection_7.jpg",
-    "img_collection_8.jpg"
-  ],
+  "MS6_2397.jpg",
+  "MS6_2405.jpg",
+  "MZ6_6987.jpg",
+  "MZ8_5605.jpg",
+  "MZ6_7271.jpg",
+  "MZ8_6526.jpg",
+  "MZ8_5801.jpg",
+  "MZ8_6283.jpg",
+  "MZ8_6615.jpg",
+  "MZ6_7304.jpg",
+  "MZ6_7343.jpg",
+  "MZ6_7387.jpg",
+  "MZ8_5241.jpg",
+  "MZ6_7001.jpg",
+  "MZ8_5272.jpg",
+  "MZ8_5568.jpg",
+  "MZ8_6315.jpg",
+  "MZ8_6499.jpg"
+],
   "words": [
     "💍💖  សូមជូនពរឱ្យជីវិតអាពាហ៍ពិពាហ៍របស់អ្នកទាំងពីរពោរពេញដោយសុភមង្គល  🌸✨",
 
@@ -209,49 +218,92 @@
   ],
   "agenda": [
     {
-      "type": "stop",
-      "time": "៧:០០ នាទី ព្រឹក",
-      "desc": "ពិធីហែរជំនូន / Traditional Khmer Dowry Procession"
+      "day": "លាភ",
+      "day_label": "កម្មវិធីថ្ងៃទី១",
+      "date": "ថ្ងៃព្រហស្បតិ៍ ទី២៥ ខែមិថុនា ឆ្នាំ២០២៦",
+      "date_en": "Thursday, 25 JUNE 2026",
+      "events": [
+        {
+          "time": "០២:០០",
+          "unit": "ថ្ងៃត្រង់",
+          "ceremony": "ពិធីក្រុងពាលី",
+          "ceremony_en": "Handover ceremony"
+        },
+        {
+          "time": "០៣:០០",
+          "unit": "ថ្ងៃត្រង់",
+          "ceremony": "ពិធីសូត្រមន្ត ចម្រើនព្រះបរិត្រ",
+          "ceremony_en": "Requesting blessing / Buddhist chanting"
+        },
+        {
+          "time": "០៤:០០",
+          "unit": "រសៀល",
+          "ceremony": "ពិធីជុំពេលី នឹងជាវខាន់ស្លា",
+          "ceremony_en": "Farewell and territory offering rite"
+        },
+        {
+          "time": "០៥:០០",
+          "unit": "រសៀល",
+          "ceremony": "អញ្ជើញភ្ញៀវពិសាអាហារពេលល្ងាច",
+          "ceremony_en": "Invitation to evening dinner"
+        }
+      ]
     },
     {
-      "type": "stop",
-      "time": "៨:៣០ នាទី ព្រឹក",
-      "desc": "កិច្ចអាពាហ៍ពិពាហ៍ / Wedding Ceremony"
-    },
-    {
-      "type": "stop",
-      "time": "១០:៣០ នាទី ព្រឹក",
-      "desc": "ពិធីចងដៃក / Blessing Ceremony"
-    },
-    {
-      "type": "stop",
-      "time": "១១:៣០ នាទី ព្រឹក",
-      "desc": "កិច្ចស្រស់ស្រូបអាហារថ្ងៃត្រង់ / Lunch reception"
-    },
-    {
-      "type": "location",
-      "time": "៦:០០ នាទី ល្ងាច",
-      "place": "សាល ចំការដូង / SALLE CHAMKAR DOUNG",
-      "addr": "Chamkar Doung Street (217), Phnom Penh 120501",
-      "note": "(Infront of Chamkar Doung's Primary School)"
-    },
-    {
-      "type": "stop",
-      "compact": true,
-      "time": "៦:៣០ នាទី យប់",
-      "desc": "កិច្ចអាហារពេលល្ងាច / Wedding Dinner"
-    },
-    {
-      "type": "stop",
-      "compact": true,
-      "time": "៨:៣០ នាទី យប់",
-      "desc": "កិច្ចកាត់នំខេក / Cake Cutting Ceremony"
-    },
-    {
-      "type": "stop",
-      "compact": true,
-      "time": "១១:០០ នាទី យប់",
-      "desc": "ចប់ពិធីមង្គលការ /  Wedding Celebrations Come to an End"
+      "day": "ជ័យ",
+      "day_label": "កម្មវិធីថ្ងៃទី២",
+      "date": "ថ្ងៃសុក្រ ទី២៦ ខែមិថុនា ឆ្នាំ២០២៦",
+      "date_en": "Friday, 26 JUNE 2026",
+      "events": [
+        {
+          "time": "០៦:៣០",
+          "unit": "ព្រឹក",
+          "ceremony": "ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំ ហែរជំនូនគេហដ្ឋានខាងស្រី",
+          "ceremony_en": "Gathering for house blessing and ancestor honoring"
+        },
+        {
+          "time": "០៧:០០",
+          "unit": "ព្រឹក",
+          "ceremony": "ពិធីហែជំនូន ចូលរោងជ័យ",
+          "ceremony_en": "House blessing ceremony"
+        },
+        {
+          "time": "០៨:៣០",
+          "unit": "ព្រឹក",
+          "ceremony": "ពិធីបំពាក់ចិញ្ចៀន",
+          "ceremony_en": "Ring exchange ceremony"
+        },
+        {
+          "time": "០៩:៣០",
+          "unit": "ព្រឹក",
+          "ceremony": "ពិធីកាត់សក់បង្កក់សេរី",
+          "ceremony_en": "Hair cutting ceremony"
+        },
+        {
+          "time": "១០:៣០",
+          "unit": "ព្រឹក",
+          "ceremony": "ពិធីសែនកុងម៉ា",
+          "ceremony_en": "Sen krom (ancestor offering) ceremony"
+        },
+        {
+          "time": "១១:០០",
+          "unit": "ព្រឹក",
+          "ceremony": "ពិធីបង្វិលពពិល សំពះផ្ទឹម សែនចងដៃ ព្រះថោងតោងស្បៃនាងនាគ",
+          "ceremony_en": "Merit making, Sompeas, hand tying and naga rite"
+        },
+        {
+          "time": "១២:០០",
+          "unit": "ថ្ងៃត្រង់",
+          "ceremony": "អញ្ជើញភ្ញៀវពិសាអាហារថ្ងៃត្រង់",
+          "ceremony_en": "Lunch invitation"
+        },
+        {
+          "time": "០៥:០០",
+          "unit": "រសៀល",
+          "ceremony": "ទទូលភ្ញៀវពិសាអាហារ យ៉ាងឆ្ងាញ់ពិសា ដោយមេត្រីភាព",
+          "ceremony_en": "Evening reception and final ceremony with family"
+        }
+      ]
     }
   ]
 }

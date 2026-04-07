@@ -78,79 +78,6 @@ function setupBackgroundMusic() {
 
   setIcon();
 }
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const lines = document.querySelectorAll(".love-poem p");
-  const elPreserveHeader = document.getElementById("preserveHeader");
-  if (!elPreserveHeader) return;
-
-  setupBackgroundMusic();
-
-  const rawText = elPreserveHeader.textContent.trim();
-  elPreserveHeader.textContent = "";
-
-  // Khmer-safe word segmentation
-  const segmenter =
-    "Segmenter" in Intl
-      ? new Intl.Segmenter("km", { granularity: "word" })
-      : null;
-
-  const words = segmenter
-    ? Array.from(segmenter.segment(rawText), (s) => s.segment)
-    : rawText.split(/\s+/);
-
-  // build spans (but keep hidden)
-  words.forEach((word, i) => {
-    if (!word.trim()) {
-      elPreserveHeader.appendChild(document.createTextNode(" "));
-      return;
-    }
-
-    const span = document.createElement("span");
-    span.className = "word";
-    span.textContent = word;
-    span.style.animationDelay = `${i * 0.08}s`;
-    elPreserveHeader.appendChild(span);
-    elPreserveHeader.appendChild(document.createTextNode(" "));
-  });
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          elPreserveHeader.querySelectorAll(".word").forEach((w) => {
-            w.style.animationPlayState = "running";
-          });
-          entry.target.classList.add("show");
-        } else {
-          entry.target.classList.remove("show");
-        }
-      });
-    },
-    {
-      threshold: 0.35,
-      rootMargin: "0px 0px -10% 0px", // smoother trigger
-    }
-  );
-
-  lines.forEach((line) => observer.observe(line));
-
-  elPreserveHeader.querySelectorAll(".word").forEach((w) => {
-    w.style.animationPlayState = "paused";
-  });
-  observer.observe(elPreserveHeader);
-  function observeReveals() {
-    document.querySelectorAll(".reveal").forEach((el) => {
-      observer.observe(el);
-    });
-  }
-
-  observeReveals();
-
-  // expose for dynamically added images
-  window.observeReveals = observeReveals;
-  await loadWishes();
-  await loadGallery();
-});
 /* ===== QOUTE ANIMATE ===== */
 const el = document.getElementById("animatedText");
 const raw = el.textContent;
@@ -236,7 +163,7 @@ function updateCountdown() {
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
-    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((distance % (1000 * 60)) / 1000);
@@ -290,9 +217,10 @@ async function loadGallery() {
       };
 
       group.appendChild(img);
+      if (!group) {
+        gallery.appendChild(group);
+      }
     });
-
-    gallery.appendChild(group);
   }
 }
 
@@ -462,77 +390,6 @@ function locationHTML(item) {
   `;
 }
 
-function renderAgenda(list) {
-  const timeline = document.getElementById("timeline");
-  if (!timeline) {
-    console.error("No #timeline found (agenda HTML not loaded yet).");
-    return;
-  }
-
-  timeline.innerHTML = "";
-  list.forEach((item, index) => {
-    if (item.type === "stop")
-      timeline.insertAdjacentHTML("beforeend", stopHTML(item));
-    else if (item.type === "location")
-      timeline.insertAdjacentHTML("beforeend", locationHTML(item));
-
-    if (index !== list.length - 1)
-      timeline.insertAdjacentHTML("beforeend", connectorHTML());
-  });
-}
-
-function animateTimelineItems() {
-  const timeline = document.getElementById("timeline");
-  if (!timeline) return;
-
-  const items = timeline.querySelectorAll(".stop, .location, .connector");
-  if (!items.length) return;
-
-  // Turn on animation mode only after items exist
-  timeline.classList.add("anim-ready");
-
-  // stagger delay
-  items.forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.08}s`;
-  });
-
-  // Fallback: if IntersectionObserver not supported, just show all
-  if (!("IntersectionObserver" in window)) {
-    items.forEach((el) => el.classList.add("show"));
-    return;
-  }
-
-  const obs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle("show", entry.isIntersecting);
-      });
-    },
-    { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
-  );
-
-  items.forEach((el) => obs.observe(el));
-}
-
-async function loadAgenda() {
-  try {
-    const htmlRes = await fetch("./components/wedding-agenda.html");
-    document.getElementById("agenda").innerHTML = await htmlRes.text();
-
-    const dataRes = await fetch("assets/manifest.json");
-    const data = await dataRes.json();
-
-    agenda = data.agenda;
-    renderAgenda(data.agenda);
-    animateTimelineItems();
-  } catch (err) {
-    console.error(err);
-    document.getElementById("agenda").innerHTML =
-      "<p style='color:#d7c38a'>Failed to load agenda</p>";
-  }
-}
-
-loadAgenda();
 function randomQuiltSize(prev) {
   // weights (favor small tiles)
   const weighted = [
@@ -589,4 +446,201 @@ async function loadRandomQuiltedGallery() {
   });
 }
 
+function runAgendaAnimations() {
+  const headers  = document.querySelectorAll('.dayHeader');
+  const dividers = document.querySelectorAll('.dayDivider');
+  const items    = document.querySelectorAll('.agendaItem');
+
+  let delay = 80;
+
+  // Day headers drop in one by one
+  headers.forEach((h, i) => {
+    setTimeout(() => h.classList.add('anim-in'), delay + i * 300);
+  });
+
+  // Dividers draw across after their header
+  dividers.forEach((d, i) => {
+    setTimeout(() => d.classList.add('anim-in'), delay + 200 + i * 300);
+  });
+
+  // Items stagger in, with a gap between each day group
+  let itemDelay = delay + 400;
+  let prevBlock = null;
+  items.forEach(item => {
+    const block = item.closest('.dayBlock');
+    if (block !== prevBlock) { itemDelay += 200; prevBlock = block; }
+    setTimeout(() => item.classList.add('anim-in'), itemDelay);
+    itemDelay += 110;
+  });
+}
+
+
 loadRandomQuiltedGallery();
+
+function escapeHtml(str) {
+  return String(str ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeAttr(str) {
+  return escapeHtml(str);
+}
+
+function agendaRowTemplate(item) {
+  const title = escapeHtml(item.desc || "");
+  const desc = escapeHtml(item.desc || "");
+  const time = escapeHtml(item.time || "");
+  const icon = (item.icon || "").trim();
+
+  return `
+    <article class="aCard">
+      <span class="aIcon" aria-hidden="true">
+        ${
+          icon
+            ? `<img src="${escapeAttr(icon)}" alt="" loading="lazy" />`
+            : `🕒`
+        }
+      </span>
+
+      <div class="aBody">
+        <div class="aTop">
+          <h3 class="aTitle">${title || "Agenda item"}</h3>
+          <div class="aTime">${time}</div>
+        </div>
+        ${desc ? `<p class="aDesc">${desc}</p>` : ""}
+      </div>
+    </article>
+  `;
+}
+
+
+async function loadAgenda() {
+  try {
+    const res = await fetch("/assets/manifest.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+    const json = await res.json();
+
+    const data = json.agenda;
+    const list = document.getElementById('agendaList');
+    data.forEach(day => {
+      const block = document.createElement('div');
+      block.className = 'dayBlock';
+      block.innerHTML = `
+        <div class="dayHeader">
+          <div class="dayNum">${day.day}</div>
+          <div class="dayTitle">
+            <h2>${day.day_label}</h2>
+            <p>${day.date} · ${day.date_en}</p>
+          </div>
+        </div>
+        <div class="dayDivider"></div>
+        <div id="dayList${day.day}"></div>
+      `;
+      list.appendChild(block);
+      const dayList = block.querySelector(`#dayList${day.day}`);
+      day.events.forEach(ev => {
+        const item = document.createElement('div');
+        item.className = 'agendaItem';
+        item.innerHTML = `
+          <div class="timeCol">
+            <div class="timeText">${ev.time}</div>
+            <div class="unitText">${ev.unit}</div>
+          </div>
+          <div class="timelineCol">
+            <div class="timelineDot"></div>
+            <div class="timelineLine"></div>
+          </div>
+          <div class="eventCard">
+            <div class="eventName">${ev.ceremony}</div>
+            <div class="eventNameEn">${ev.ceremony_en}</div>
+          </div>
+        `;
+        dayList.appendChild(item);
+      });
+    });
+
+    runAgendaAnimations();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const lines = document.querySelectorAll(".love-poem p");
+  const elPreserveHeader = document.getElementById("preserveHeader");
+  if (!elPreserveHeader) return;
+
+  setupBackgroundMusic();
+
+  const rawText = elPreserveHeader.textContent.trim();
+  elPreserveHeader.textContent = "";
+
+  // Khmer-safe word segmentation
+  const segmenter =
+    "Segmenter" in Intl
+      ? new Intl.Segmenter("km", { granularity: "word" })
+      : null;
+
+  const words = segmenter
+    ? Array.from(segmenter.segment(rawText), (s) => s.segment)
+    : rawText.split(/\s+/);
+
+  // build spans (but keep hidden)
+  words.forEach((word, i) => {
+    if (!word.trim()) {
+      elPreserveHeader.appendChild(document.createTextNode(" "));
+      return;
+    }
+
+    const span = document.createElement("span");
+    span.className = "word";
+    span.textContent = word;
+    span.style.animationDelay = `${i * 0.08}s`;
+    elPreserveHeader.appendChild(span);
+    elPreserveHeader.appendChild(document.createTextNode(" "));
+  });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          elPreserveHeader.querySelectorAll(".word").forEach((w) => {
+            w.style.animationPlayState = "running";
+          });
+          entry.target.classList.add("show");
+          runAgendaAnimations();
+        } else {
+          entry.target.classList.remove("show");
+        }
+      });
+    },
+    {
+      threshold: 0.35,
+      rootMargin: "0px 0px -10% 0px", // smoother trigger
+    },
+  );
+
+  lines.forEach((line) => observer.observe(line));
+  observer.observe(document.getElementById('eventAgenda'));
+  elPreserveHeader.querySelectorAll(".word").forEach((w) => {
+    w.style.animationPlayState = "paused";
+  });
+  observer.observe(elPreserveHeader);
+  function observeReveals() {
+    document.querySelectorAll(".reveal").forEach((el) => {
+      observer.observe(el);
+    });
+  }
+
+  observeReveals();
+ 
+  // expose for dynamically added images
+  window.observeReveals = observeReveals;
+
+  await loadWishes();
+  await loadGallery();
+ await loadAgenda();
+});
