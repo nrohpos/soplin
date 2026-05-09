@@ -31,6 +31,7 @@ function revealMainPage() {
   mainPage.classList.add('visible');
   initPetals();
   initReveal();
+  startMusic();
 }
 
 function openEnvelope() {
@@ -58,6 +59,7 @@ function openEnvelope() {
 
     initPetals();
     initReveal();
+     startMusic();
   }, 1900);
 }
 
@@ -189,3 +191,35 @@ function initCountdown() {
 }
 
 initCountdown();
+
+
+const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+
+function startMusic() {
+  if (!bgMusic) return;
+
+  bgMusic.volume = 0.45;
+
+  bgMusic.play()
+    .then(() => {
+      musicToggle.textContent = '♫';
+      musicToggle.classList.remove('muted');
+    })
+    .catch(() => {
+      musicToggle.textContent = '▶';
+      musicToggle.classList.add('muted');
+    });
+}
+
+function toggleMusic() {
+  if (!bgMusic) return;
+
+  if (bgMusic.paused) {
+    startMusic();
+  } else {
+    bgMusic.pause();
+    musicToggle.textContent = '🔇';
+    musicToggle.classList.add('muted');
+  }
+}
