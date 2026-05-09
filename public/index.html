@@ -1,154 +1,231 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soplin ការចងចាំអាពាហ៍ពិពាហ៍</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;500;600&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/x-icon" href="/assets/logo/logo.png" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation — Dalin & Sophorn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <header>
-    <div class="logo"> <img src="/assets/logo/logo.png" /> </div>
-  </header>
-  <div class="hero">
-    <div>
-      <div class="hero-quote">
-        <h1 id="animatedText" class="km-quote"> “ពីមនុស្សពីរនាក់ ក្លាយជាជីវិត្តមនុស្សតែម្នាក់ ក្រោមវាសនា
-          និងសេចក្ដីស្រឡាញ់កើតចេញពីចិត្ត តែមួយ” </h1>
-        <h2 class="nameText"> ~ អៀង ទិត្យសោភ័ណ្ឌ <span>នឹង</span> វុន ដាលីន ~ </h2>
+
+<div id="envelope-screen">
+  <div class="env-particles" id="envParticles"></div>
+
+  <div id="env-named" style="display:none;flex-direction:column;align-items:center;">
+    <div class="env-guest-tag">
+      <p class="env-to-label">You are cordially invited,</p>
+      <p class="env-guest-name" id="guestNameDisplay"></p>
+      <p class="env-invite-line">To the Wedding of Sophorn &amp; Dalin</p>
+    </div>
+
+    <div class="envelope-wrap" id="envelopeWrap" onclick="openEnvelope()">
+      <div class="env-body">
+        <div class="env-bg"></div>
+        <div class="env-fold-left"></div>
+        <div class="env-fold-right"></div>
+        <div class="env-fold-bottom"></div>
+
+        <div class="env-letter" id="envLetter">
+          <div class="env-letter-monogram">Eang Tithsophorn <span class="env-letter-amp">&amp;</span><br>Vun Dalin</div>
+          <div class="env-letter-rule"></div>
+          <p class="env-letter-date">26 · 06 · 2026</p>
+        </div>
+
+        <div class="env-flap" id="envFlap">
+          <div class="env-flap-shape"></div>
+        </div>
       </div>
-      <div class="countdown">
-        <div><span id="days">00</span><small>ថ្ងៃ</small></div>
-        <div><span id="hours">00</span><small>ម៉ោង</small></div>
-        <div><span id="minutes">00</span><small>នាទី</small></div>
-        <div><span id="seconds">00</span><small>វិនាទី</small></div>
-      </div>
-      <p class="wedding-date" id="weddingMessage">២៦ មិថុនា ២០២៦</p> <audio id="bgMusic"
-        src="/assets/songs/somewhere_over_rainbow.mp3" loop></audio> <button id="musicBtn" class="music-btn"
-        type="button"> 🔊 Music </button>
+
+      <div class="env-seal" id="envSeal">💌</div>
+
+      <p class="env-click-hint">✦ &nbsp; Tap the seal to open &nbsp; ✦</p>
     </div>
   </div>
 
+  <div id="env-generic" style="display:none;">
+    <div class="env-generic-wrap">
+      <div class="env-generic-ornament">✦ 💌 ✦</div>
+      <h2 class="env-generic-title">You've received<br>a wedding invitation</h2>
+      <p class="env-generic-body">
+        Tap below to open the invitation and celebrate with us.
+      </p>
+      <button class="env-open-btn" onclick="revealMainPage()">
+        Open Invitation
+      </button>
+    </div>
+  </div>
+</div>
 
-    <section class="meet-couple">
-      <div class="meet-container">
-        <h2 class="section-title">Introducing the Couple</h2>
+<div id="main-page">
 
-        <p class="love-quote">
-          “Two souls united, one heart shared, one beautiful journey ahead.”
-        </p>
+<nav>
+  <a href="#couple">Couple</a>
+  <a href="#agenda">Agenda</a>
+  <a href="#location">Venue</a>
+  <a href="#dresscode">Dress Code</a>
+  <a href="#gift">Gift</a>
+  <a href="#wishes">Wishes</a>
+  <a href="#gallery">Gallery</a>
+</nav>
 
-        <div class="couple-wrapper">
-          <div class="person-card reveal">
-            <img
-              src="/assets/imgs/meet_the_groom1.jpg"
-              alt="Groom"
-              class="person-img-wrap"
-            />
-            <h3 class="groom reveal-up delay-1">Eang Tithsophorn</h3>
-            <span class="role reveal-up delay-2">The Groom</span>
-            <p class="reveal-up delay-3">
-              A gentle soul, defined by patience and kindness, with a love that never wavers.
-            </p>
-          </div>
+<section id="hero">
+  <picture class="hero-bg-picture">
+  <source media="(max-width: 768px)" srcset="https://pub-ff3b331d4f154de48c0c15f1967cdd77.r2.dev/img_banner.jpg">
+  <img src="assets/imgs/img_banner.jpg" alt="Wedding Background" class="hero-bg-image">
+</picture>
+  <div class="hero-petals" id="petals"></div>
+  <div class="hero-guest-banner" id="heroBanner">Welcome, <span id="heroBannerName"></span> 🌸</div>
+  <div class="hero-ornament">✦ ✦ ✦</div>
+  <p class="hero-sub">Together with their families</p>
+  <h1 class="hero-names">Sophorn <span class="hero-amp">&</span> Dalin</h1>
+  <p class="hero-date">Friday, the Twenty-Six. of June · Two Thousand Twenty-Six</p>
+  <div class="countdown" id="countdown">
+  <div><span id="days">00</span><p>Days</p></div>
+  <div><span id="hours">00</span><p>Hours</p></div>
+  <div><span id="minutes">00</span><p>Minutes</p></div>
+  <div><span id="seconds">00</span><p>Seconds</p></div>
+</div>
+  <div class="hero-divider"><span></span><i>❧</i><span></span></div>
+  <blockquote class="hero-quote">"You are my today and all of my tomorrows. Every moment with you is a gift I will forever treasure."</blockquote>
+  <p class="hero-quote-attr">— Tithsophorn Eang & Dalin Vun</p>
+</section>
 
-          <div class="person-card reveal">
-            <img
-              src="/assets/imgs/meet_the_groom2.jpg"
-              alt="Bride"
-              class="person-img-wrap"
-            />
-            <h3 class="reveal-up delay-1">Vun Dalin</h3>
-            <span class="role reveal-up delay-2">The Bride</span>
-            <p class="reveal-up delay-3">
-             A woman of grace and warmth, whose smile brightens every moment.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  <!-- ===== Wedding Schedule ===== -->
-  <section id="eventAgenda" class="agendaSection">
-  <div class="container">
-    <div class="agendaList" id="agendaList"></div>
+<section id="couple">
+  <p class="section-label reveal">Our Story</p>
+  <h2 class="section-title reveal">Meet the Couple</h2>
+  <div class="section-divider reveal"><span></span><i>✦</i><span></span></div>
+  <div class="couple-grid">
+    <div class="person-card reveal">
+      <div class="person-img-wrap"><img src="assets/imgs/meet_the_bride.jpg" alt="Dalin"></div>
+      <p class="person-name">Dalin</p>
+      <p class="person-role">The Bride</p>
+      <p class="person-bio">A dreamer with a warm heart, Dalin believes love is the grandest adventure one can embark on. She met Sophorn on a rainy afternoon and knew from the very first smile.</p>
+    </div>
+    <div class="couple-center reveal">
+      <div class="couple-heart">♡</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--dusty-rose);font-size:0.9rem;text-align:center;">Forever</p>
+    </div>
+    <div class="person-card reveal">
+      <div class="person-img-wrap"><img src="assets/imgs/meet_the_groom.jpg" alt="Dalin"></div>
+      <p class="person-name">Sophorn</p>
+      <p class="person-role">The Groom</p>
+      <p class="person-bio">Steady, thoughtful, and endlessly kind — Sophorn has loved Dalin quietly and fiercely since the day their paths crossed. He plans to spend every day making her laugh.</p>
+    </div>
   </div>
 </section>
-  <!-- ===== Wedding Location ===== -->
-  <section class="wedding-timeline">
-    <div class="agenda-container">
-      <div class="agenda-header">
-        <div class="agenda-text">
-          <h2 class="agenda-title">Wedding Location</h2>
-          <p class="agenda-subtitle">ទីតាំង កម្មវិធីអាពាហ៍ពិពាហ៍</p>
-        </div>
-        <div class="map-embed"> <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1914.8024964758313!2d104.89138172715782!3d11.509283717324266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951a2a6ea6fef%3A0x29fb0ab8e6c666aa!2zU0FMTEUgQ0hBTUtBUiBET1VORyDhnp_hnrbhnpsg4Z6F4Z-G4Z6A4Z624Z6a4Z6K4Z684Z6E!5e0!3m2!1sen!2skh!4v1766677339744!5m2!1sen!2skh"
-            loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe> <a
-            class="map-btn map-btn--inside" href="https://maps.app.goo.gl/QAGy656eXb2VGuLr9" target="_blank"
-            rel="noopener"> 🧭 បើកផែនទី </a> </div>
-      </div>
-  </section>
-  <section class="two-col"> <img src="assets/imgs/img_timing.jpg" alt="Story" class="reveal" />
-    <div>
-      <h2 id="preserveHeader" class="preserve-header">តម្លៃនៃពេលវេលា ថ្ងៃណាក៏មានន័យឲតែយើងបានសើច</h2>
-      <p class="preserve"> ជីវិត្តយើងរស់នៅមិនយូរទេ, យើងគួរណាបង្កើតការចងចាំល្អៗឲបានច្រើន ទាន់នៅអាចមើលឃើញ ប៉ះបាន ទៅដល់
-        នឹងដឹងក្លិនពីវា។ ការចាប់ដៃគ្នាមិនមែន១វិនាទី គឺរហូត កាន់ដូចម្តាយយើងកាន់ដៃយើង ដើរ រត់ កាន់ពេលគាត់នឹកបារម្ភពីយើង។
-        ស្រឡាញ់គ្នាដូចយើងស្រឡាញ់គ្រួសារយើង។ 
-        ១-២-៣ កុំលេងដីកើតមេរោគ៌ ជាចម្រៀងពេលនៅក្មេង តែបើអ្នកស្រលាញ់នរណាម្នាក់
-         ១ យោគយល់គ្នា គោរពគ្នាអត់ឱនឲគ្នា 
-         ២ ជឿជាក់នឹង ផ្ដល់សេចក្ដីស្រលាញ់ឲគ្នា 
-         ៣ សាងអនាគតល្អជាមួយគ្នា
-        ធ្វើឲបានដូចអ្នកមានគុណយើង! </p>
-    </div>
-  </section> <!-- ===== CATEGORY ===== -->
-  <div class="category">
-   
-  </div> <!-- ===== DARK STORY ===== -->
-  <section class="two-col">
-    <div>
-      <h2 class="love-header">យើងជួបគ្នា តាមផ្លូវណា...</h2>
-      <div class="love-poem">
-        <p>ឆ្នាំ២០២០ ជាឆ្នាំដែលវាសនានាំឲ្យយើងជួបគ្នា</p>
-        <p>នៅកន្លែងធ្វើការមួយ ឈ្មោះថា Gaea-Sys</p>
-        <p>ចាប់ផ្តើមពីការងារ ក្លាយជាមិត្តរួមការងារ</p>
-        <p>ចាប់ផ្តើមពីមិត្តរួមការងារ ក្លាយជាការយល់ចិត្ត</p>
-        <p>ចាប់ផ្តើមពីការយល់ចិត្ត ក្លាយជាការគូរបណ្តូលចិត្ត</p>
-        <p>ចាប់ផ្តើមពីការគូរបណ្តូលចិត្ត ក្លាយជាការគូរជីវិត្ត</p>
-        <p>បងមិនត្រឹមតែធ្វើការជាមួយអូនទេ</p>
-        <p>បងជ្រើសរើសដើរតាមអូន</p>
-        <p>នៅគ្រប់ទីកន្លែងដែលនៃជីវិត្ត</p>
-      </div>
-    </div> <img src="assets/imgs/img_story.jpg" alt="Couple" class="reveal" />
-  </section>
-  <section class="quilted-section">
-    <h2 class="quilted-title"> រូបអនុស្សាវរីយ៍ នៃយើងទាំងពីរ </h2>
-    <div class="quilted-collection">
-      <div class="quilted-grid" id="quiltedGallery"></div>
-    </div>
-  </section> <!-- ===== MODAL ===== -->
-  <div class="modal" id="modal"> <img id="modalImg" /> </div> <!-- Floating Button --> <a href="#" id="congratsBtn"
-    class="btn-congrats floating">ផ្ញើរពាក្យប្រសិទ្ធពរជ៍យរបស់អ្នក ....</a> <!-- Popup -->
-  <div class="wish-modal" id="wishModal" aria-hidden="true">
-    <div class="wish-card">
-      <div class="wish-head">
-        <div class="wish-title">ពាក្យប្រសិទ្ធពរជ៍យ ជូនគូរសាមីភារយាថ្មី💖</div> <button class="wish-close" id="wishClose"
-          type="button">✕</button>
-      </div> <textarea id="wishText" class="wish-input" rows="4" maxlength="300"
-        placeholder="សរសេរ នូវពាក្យពរជ៍យ..."></textarea>
-      <div class="wish-actions"> <button id="wishRandom" class="wish-random" type="button"> 🎲 ផ្លាស់ ប្តូរពាក្យ
-        </button> <button id="wishSend" class="wish-send" type="button">ផ្ញើរ</button> </div>
-    </div>
-  </div> <!-- ===== FOOTER ===== -->
-  <footer> © ២០២៦ ការចងចាំអាពាហ៍ពិពាហ៍ នឹង ភាពចែករំលែក <br /> <a href="https://t.me/msg_to_soplin" target="_blank"
-      rel="noopener" class="footer-link"> មើលពាក្យជូនពរជ៍យ… </a> </footer>
-  <script src="main.js"></script>
-</body>
 
+<section id="agenda">
+  <p class="section-label reveal">The Day</p>
+  <h2 class="section-title reveal">Wedding Agenda</h2>
+  <div class="section-divider reveal"><span></span><i>✦</i><span></span></div>
+  <div class="timeline">
+    <div class="timeline-item reveal"><div class="t-left"><p class="t-time">09:00 AM</p><p class="t-event">Guest Arrival</p><p class="t-desc">Welcome & seating</p></div><div class="t-dot">🕊</div><div class="t-right"></div></div>
+    <div class="timeline-item reveal"><div class="t-left"></div><div class="t-dot">💍</div><div class="t-right"><p class="t-time">10:00 AM</p><p class="t-event">Wedding Ceremony</p><p class="t-desc">Exchange of vows & rings</p></div></div>
+    <div class="timeline-item reveal"><div class="t-left"><p class="t-time">11:30 AM</p><p class="t-event">Photo Session</p><p class="t-desc">Family & couple portraits</p></div><div class="t-dot">📸</div><div class="t-right"></div></div>
+    <div class="timeline-item reveal"><div class="t-left"></div><div class="t-dot">🥂</div><div class="t-right"><p class="t-time">12:30 PM</p><p class="t-event">Wedding Luncheon</p><p class="t-desc">Fine dining & toasts</p></div></div>
+    <div class="timeline-item reveal"><div class="t-left"><p class="t-time">02:30 PM</p><p class="t-event">Cake Cutting</p><p class="t-desc">A sweet celebration</p></div><div class="t-dot">🎂</div><div class="t-right"></div></div>
+    <div class="timeline-item reveal"><div class="t-left"></div><div class="t-dot">🎉</div><div class="t-right"><p class="t-time">03:00 PM</p><p class="t-event">Evening Reception</p><p class="t-desc">Dancing, music & joy</p></div></div>
+    <div class="timeline-item reveal"><div class="t-left"><p class="t-time">07:00 PM</p><p class="t-event">Grand Farewell</p><p class="t-desc">Farewell with sparklers</p></div><div class="t-dot">✨</div><div class="t-right"></div></div>
+  </div>
+</section>
+
+<section id="location">
+  <p class="section-label reveal">Find Us</p>
+  <h2 class="section-title reveal">Wedding Venue</h2>
+  <div class="section-divider reveal"><span></span><i>✦</i><span></span></div>
+  <div class="location-grid">
+    <div class="map-box reveal">
+      <div class="map-placeholder">
+        <div class="map-icon">📍</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:0.5rem;">The Salle Chamkar Doung</p>
+        <div class="map-box reveal">
+  <img 
+    src="https://pub-ff3b331d4f154de48c0c15f1967cdd77.r2.dev/img_salle_cham_ka_dong.png"
+    class="map-image"
+    alt="Salle Chamkar Doung"
+  >
+</div>
+      </div>
+    </div>
+    <div class="location-info reveal">
+      <h3>The Salle Chamkar Doung</h3>
+      <div class="location-detail"><span class="icon">📍</span><p>Chamkar Doung Street (217)<br>Phnom Penh ,120501</p></div>
+      <div class="location-detail"><span class="icon">🕐</span><p>Doors open at 7:00 AM<br>Please arrive 30 minutes early</p></div>
+      <div class="location-detail"><span class="icon">🚗</span><p>Complimentary valet parking.<br>Public parking on adjacent streets.</p></div>
+      <div class="location-detail"><span class="icon">📞</span><p>Venue's Owner: 012 365 788</p></div>
+      <a href="https://maps.app.goo.gl/LY3svPnJ1Scvjx4A6" target="_blank" class="btn-directions">Get Directions →</a>
+    </div>
+  </div>
+</section>
+
+<section id="dresscode">
+  <p class="section-label reveal">Attire</p>
+  <h2 class="section-title reveal">Dress Code</h2>
+  <div class="section-divider reveal"><span></span><i>✦</i><span></span></div>
+  <div class="dresscode-grid">
+    <div class="dc-card reveal"><div class="dc-swatch" style="background:linear-gradient(135deg,#8a9e8b,#6a7e6b);"></div><p class="dc-name">Sage Green</p><p class="dc-note">Recommended for ladies</p></div>
+    <div class="dc-card reveal"><div class="dc-swatch" style="background:linear-gradient(135deg,#e8c9b8,#c9917a);"></div><p class="dc-name">Dusty Blush</p><p class="dc-note">Lovely on all</p></div>
+    <div class="dc-card reveal"><div class="dc-swatch" style="background:linear-gradient(135deg,#c9a96e,#a8874d);"></div><p class="dc-name">Champagne</p><p class="dc-note">Recommended for gents</p></div>
+  </div>
+  <p class="dresscode-note reveal">"We kindly request garden party formal attire. Please avoid white, ivory, or black.<br>Heels with heel caps are recommended for our garden ceremony."</p>
+</section>
+
+<section id="gift">
+  <p class="section-label reveal">Wedding Gift</p>
+  <h2 class="section-title reveal">Your Presence is Our Gift</h2>
+  <div class="section-divider reveal"><span></span><i>✦</i><span></span></div>
+  <div class="gift-inner reveal">
+    <p class="gift-desc">Your presence is the greatest gift of all. However, if you wish to bless us further, a monetary gift would be warmly treasured as we begin our new life together.</p>
+    <div class="qr-grid">
+      <div class="qr-card"><p class="qr-label">Bank Transfer</p><div class="qr-box"><span class="qr-icon">🏦</span></div><p class="qr-name">Sophorn & Dalin</p><p class="qr-number">Account: 026-970-670-099</p><p class="qr-number" style="font-size:0.7rem;color:var(--gold);">KB PRASAC Bank</p></div>
+      <div class="qr-card"><p class="qr-label">Digital Payment</p><div class="qr-box"><img src="https://pub-ff3b331d4f154de48c0c15f1967cdd77.r2.dev/khqr.png" alt="KHQR Code" class="qr-image"></div><p class="qr-name">Sophorn & Dalin</p><p class="qr-number">KHQR Code</Code></p><p class="qr-number" style="font-size:0.7rem;color:var(--gold);">Scan to Send</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="wishes">
+  <p class="section-label reveal">Leave a Note</p>
+  <h2 class="section-title reveal">Send Your Wishes</h2>
+  <div class="section-divider reveal"><span></span><i>✦</i><span></span></div>
+  <div class="wish-form-wrap reveal">
+    <p class="wish-intro">Your kind words mean the world to us. Leave a message and it will be shared with our Telegram group to treasure forever.</p>
+    <form class="wish-form" id="wishForm" onsubmit="sendWish(event)">
+      <input type="text" id="wishName" placeholder="Your Name" required>
+      <textarea id="wishMsg" placeholder="Write your heartfelt message…" required></textarea>
+      <button type="submit" class="btn-primary">✉ Send Wishes</button>
+    </form>
+    <div class="wish-success" id="wishSuccess">🌸 Thank you! Your wish has been sent. We are deeply touched by your love.</div>
+    <div class="wishes-display"><h3>❧ Wishes from Loved Ones</h3><div id="wishesList"></div></div>
+  </div>
+</section>
+
+<section id="gallery">
+  <p class="section-label reveal">Memories</p>
+  <h2 class="section-title reveal">Our Gallery</h2>
+  <div class="section-divider reveal"><span></span><i>✦</i><span></span></div>
+  <div class="gallery-grid reveal" id="galleryGrid"></div>
+  <div class="upload-section reveal">
+    <h3>📸 Share Your Moments</h3>
+    <p>Did you capture a special moment? Upload your photos to our shared Google Photos album and see them right here!</p>
+    <a href="https://drive.google.com/drive/folders/1HfWxRrU0xly7zQepbaA_ooUspg0CVGF-?usp=sharing" target="_blank" class="btn-upload">☁ Upload to Our Album</a>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-names">Dalin & Sophorn</p>
+  <p>June 26, 2026 · With love & gratitude</p>
+  <p style="margin-top:0.5rem;font-size:0.65rem;">#DalinAndSophorn2K26</p>
+</footer>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img src="" id="lightboxImg" alt="">
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>
