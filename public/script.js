@@ -59,7 +59,7 @@ function openEnvelope() {
 
     initPetals();
     initReveal();
-     startMusic();
+    startMusic();
   }, 1900);
 }
 
